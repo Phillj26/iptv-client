@@ -22,10 +22,13 @@ Streamline is a playlist client, not a stream catalogue. The project accepts onl
 
 ## Initial manifest entries
 
-The initial manifest uses official provider links plus one rights-documented public-domain playlist rather than brittle, undocumented media URLs:
+The initial manifest uses official provider links plus one rights-documented public-domain playlist rather than brittle, undocumented media URLs. It also includes location-aware handoffs for local news and official free/subscription services for news, sports, and movies; these cards open the provider instead of extracting protected feeds:
 
 - NASA+ is identified by NASA as a no-cost, ad-free service with live coverage and on-demand programming.
 - The Library of Congress National Screening Room provides access to films whose rights status and approved viewing terms are documented by the Library.
+- Local Now, NewsON, and Haystack News provide official local/news handoffs.
+- Pluto TV and Tubi provide official free live/movie handoffs.
+- Fubo and Netflix provide official subscription sports/movie handoffs.
 
 The Public-domain movies playlist is published by `OnlineM3U` on GitHub, identifies its entries as public-domain works, and points to Internet Archive media files. The app imports the playlist links without rehosting them. The publisher's rights statement and each item's terms should be reviewed before reuse. Availability can vary by location, platform, and provider terms.
 

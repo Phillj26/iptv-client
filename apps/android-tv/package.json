@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "sync": "cap sync android",
+    "configure": "node ../../scripts/configure-android-tv.mjs",
+    "create": "cap add android",
+    "sync": "cap sync android && node ../../scripts/configure-android-tv.mjs",
     "open": "cap open android"
   },
   "dependencies": {
     "@capacitor/android": "^7.4.3",
-    "@capacitor/core": "^7.4.3"
+    "@capacitor/app": "^7.1.2",
+    "@capacitor/browser": "^7.0.5",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/geolocation": "^7.1.8",
+    "@capacitor/network": "^7.0.4",
+    "@capacitor/screen-orientation": "^7.0.4"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.3"

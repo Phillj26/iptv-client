@@ -3,6 +3,7 @@ import type { CategoryId, Channel } from "./types";
 const categoryRules: Array<[CategoryId, RegExp]> = [
   ["premium", /\bpremium\b|\bsubscription\b|\bpay\s?tv\b|\bvip\b/i],
   ["sports", /\bsports?\b|\bnba\b|\bnfl\b|\bmlb\b|\bnhl\b|\bsoccer\b|\bfootball\b|\bgolf\b|\btennis\b/i],
+  ["news", /\bnews\b|\bnewscast\b|\bheadlines?\b|\bweather\b|\bcurrent affairs\b/i],
   ["movies", /\bmovie\b|\bfilm\b|\bcinema\b|\bvod\b|\bon demand\b/i],
   ["local", /\blocal\b|\bregional\b|\bmetro\b|\bcommunity\b|\bpublic access\b/i]
 ];

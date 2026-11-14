@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-const categories = new Set(["local", "live-tv", "movies", "sports", "premium"]);
+const categories = new Set(["local", "live-tv", "news", "movies", "sports", "premium"]);
 const kinds = new Set(["official-link", "user-authorized-playlist", "direct-stream", "curated-public-playlist"]);
 
 function assert(condition, message) {
@@ -71,6 +71,29 @@ export async function validateDirectStreamsOnline(sources) {
     assert(body.includes("#EXTM3U"), `${source.id} is not an HLS playlist.`);
   }
   return directStreams.length;
+}
+
+export async function validateOfficialLinksOnline(sources) {
+  const officialLinks = sources.filter((source) => source.kind === "official-link");
+  const accessLimited = [];
+  for (const source of officialLinks) {
+    try {
+      const response = await fetch(source.providerUrl, {
+        headers: { "user-agent": "Streamline-source-validator/1.0" },
+        redirect: "follow",
+        signal: AbortSignal.timeout(10_000)
+      });
+      if ([401, 403, 429].includes(response.status)) {
+        accessLimited.push(source.id);
+      } else {
+        assert(response.ok, `${source.id} provider page returned HTTP ${response.status}.`);
+      }
+      await response.body?.cancel();
+    } catch (error) {
+      throw new Error(`${source.id} provider page could not be reached: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+  return { count: officialLinks.length, accessLimited };
 }
 
 export async function validateCuratedPlaylistsOnline(sources) {

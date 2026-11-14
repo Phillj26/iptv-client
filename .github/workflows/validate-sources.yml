@@ -1,0 +1,43 @@
+name: Validate authorized sources
+
+on:
+  push:
+    paths:
+      - "sources/**"
+      - "scripts/source-policy.mjs"
+      - "scripts/validate-sources.mjs"
+      - "packages/core/**"
+      - "pnpm-lock.yaml"
+  pull_request:
+    paths:
+      - "sources/**"
+      - "scripts/source-policy.mjs"
+      - "scripts/validate-sources.mjs"
+      - "packages/core/**"
+      - "pnpm-lock.yaml"
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-validation:
+    name: Check source availability
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install pnpm
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Validate public and official provider sources
+        run: pnpm validate:sources --online

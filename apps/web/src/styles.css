@@ -51,12 +51,24 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px
 .orbit-signal { width: .6rem; height: .6rem; position: absolute; top: .85rem; right: 2rem; background: #67dfae; border-radius: 50%; box-shadow: 0 0 1rem #67dfae; }
 .setup-panel, .content-row, .official-sources { margin: 0 clamp(1.2rem, 4vw, 4rem) 2.5rem; }
 .setup-panel { background: #101725; border: 1px solid #2e3d52; border-radius: 1.1rem; padding: 1.3rem; }
+.auth-panel { max-width: 48rem; }
+.auth-form { max-width: 32rem; display: grid; gap: .8rem; }
+.auth-form label { display: grid; gap: .35rem; color: #dce6f4; font-weight: 700; font-size: .88rem; }
+.auth-form input { width: 100%; background: #080c14; border: 1px solid #344359; border-radius: .5rem; color: #f8fbff; padding: .65rem .7rem; outline: none; }
+.auth-note, .auth-signed-in p { margin: 0; color: #a7b4c6; line-height: 1.5; }
+.auth-status { color: #8d9aaf; }
+.auth-signed-in { display: grid; gap: .8rem; max-width: 36rem; }
 .section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
 .section-heading h2 { margin: 0; font-size: 1.35rem; letter-spacing: -.025em; }
 .section-heading p { margin: .35rem 0 0; color: #8994a7; font-size: .88rem; }
 .icon-button { border: 1px solid #39475c; background: #172031; color: #eff5ff; width: 2.2rem; height: 2.2rem; font-size: 1.45rem; line-height: 1; border-radius: .6rem; }
 .setup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
 .upload-card, .url-card { border: 1px dashed #3e536d; border-radius: .8rem; background: #0c111c; padding: 1rem; min-height: 10.2rem; display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; color: #edf4ff; }
+.location-card { margin-top: .8rem; border: 1px solid #2e435b; border-radius: .8rem; background: #0c111c; padding: 1rem; display: grid; gap: .65rem; color: #edf4ff; }
+.location-card > div:first-child { display: grid; gap: .3rem; }
+.location-card small { color: #8d9aaf; line-height: 1.4; }
+.location-controls { display: flex; flex-wrap: wrap; gap: .55rem; }
+.location-controls input { flex: 1 1 14rem; min-width: 0; background: #080c14; border: 1px solid #344359; border-radius: .5rem; color: #f8fbff; padding: .6rem; outline: none; }
 .upload-card:hover { border-color: #72dcff; background: #101a28; }
 .upload-card > span { font-size: 1.5rem; color: #77ddff; }
 .upload-card small, .url-card small { color: #8d9aaf; line-height: 1.4; }
@@ -88,8 +100,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px
 .empty-state p { max-width: 38rem; margin: 0 0 1.2rem; color: #a7b1c1; line-height: 1.55; }
 .empty-state.compact { min-height: 10rem; }
 .count-pill, .policy-label { color: #91a0b5; border: 1px solid #354157; padding: .25rem .55rem; border-radius: 99px; font-size: .75rem; }
-.channel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: .9rem; }
-.channel-shell { position: relative; min-width: 0; }
+.channel-grid { display: flex; gap: .9rem; overflow-x: auto; overscroll-behavior-inline: contain; padding: .25rem .2rem .8rem; scroll-behavior: smooth; scroll-snap-type: x proximity; scrollbar-color: #43546b transparent; scrollbar-width: thin; }
+.channel-shell { position: relative; flex: 0 0 clamp(10.5rem, 16vw, 14rem); min-width: 0; scroll-snap-align: start; }
 .channel-card { width: 100%; min-height: 12rem; display: flex; flex-direction: column; overflow: hidden; padding: 0; border: 1px solid #293346; border-radius: .85rem; background: #111724; color: #fff; text-align: left; transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
 .channel-card:hover, .channel-card:focus-visible { transform: translateY(-4px); border-color: #73dcff; box-shadow: 0 .9rem 2rem #0009; }
 .channel-art { height: 7.8rem; overflow: hidden; background: linear-gradient(135deg, #2d4963, #1c2941 55%, #111929); display: grid; place-items: center; font-size: 2.3rem; font-weight: 800; color: #cef5ff; }
@@ -101,11 +113,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px
 .favorite-button { position: absolute; right: .55rem; top: .55rem; width: 2rem; height: 2rem; border-radius: 50%; border: 1px solid #607087; color: #f9fdff; background: #08101ccc; font-size: 1.25rem; }
 .favorite-button[aria-pressed="true"] { color: #ff91b9; border-color: #ff91b9; }
 .official-sources { padding: 1.4rem; border-radius: 1rem; background: linear-gradient(135deg, #111827, #0c1320); border: 1px solid #2a3d56; }
+.source-status { display: grid; justify-items: end; gap: .3rem; text-align: right; }
+.source-status small { color: #8d9aaf; font-size: .72rem; }
 .source-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .85rem; }
 .source-card { min-height: 13.5rem; background: #0a101a; border: 1px solid #2e3b4e; border-radius: .75rem; padding: 1rem; display: flex; justify-content: space-between; flex-direction: column; align-items: flex-start; gap: 1rem; }
 .source-card h3 { margin: .6rem 0; font-size: 1rem; }
 .source-card p { margin: 0; color: #a7b4c6; line-height: 1.45; font-size: .83rem; }
 .source-type { color: #80e1bc; font-size: .69rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; }
+.source-recommended { color: #78dcff; font-size: .74rem; }
 .dialog-backdrop { z-index: 10; position: fixed; inset: 0; padding: 1.25rem; background: #03050ad9; display: grid; place-items: center; }
 .player-dialog { width: min(100%, 68rem); background: #101621; border: 1px solid #3a4c63; border-radius: 1rem; overflow: hidden; box-shadow: 0 1rem 4rem #000; }
 .player-header { padding: 1rem 1.2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
@@ -132,11 +147,11 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px
   .hero-orbit { display: none; }
   .setup-panel, .content-row, .official-sources, .empty-state { margin-left: 1rem; margin-right: 1rem; }
   .setup-grid { grid-template-columns: 1fr; }
-  .channel-grid { grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: .7rem; }
+  .channel-grid { gap: .7rem; }
   .channel-card { min-height: 11.2rem; }
   .channel-art { height: 7rem; }
 }
 
 @media (min-width: 1500px) {
-  .channel-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .channel-shell { flex-basis: 14rem; }
 }

@@ -1,22 +1,26 @@
 import { categorizeChannel, primaryCategory } from "./catalog";
 import { firstUnquotedComma, parseAttributes } from "./text";
-import type { Channel, ParsedPlaylist, PlaylistWarning } from "./types";
+import type { CategoryId, Channel, ParsedPlaylist, PlaylistWarning } from "./types";
 
 interface ExtInf {
   attributes: Record<string, string>;
+  duration: number;
   name: string;
 }
 
 export interface ParseM3uOptions {
   sourceId: string;
   name?: string;
+  defaultCategory?: CategoryId;
 }
 
 function parseExtInf(value: string): ExtInf {
   const commaIndex = firstUnquotedComma(value);
   const metadata = commaIndex === -1 ? value : value.slice(0, commaIndex);
+  const durationToken = metadata.trim().split(/\s+/, 1)[0] ?? "-1";
+  const duration = Number.parseFloat(durationToken);
   const name = commaIndex === -1 ? "Untitled channel" : value.slice(commaIndex + 1).trim() || "Untitled channel";
-  return { attributes: parseAttributes(metadata), name };
+  return { attributes: parseAttributes(metadata), duration: Number.isFinite(duration) ? duration : -1, name };
 }
 
 function channelId(sourceId: string, streamUrl: string, tvgId?: string): string {
@@ -78,7 +82,12 @@ export function parseM3u(content: string, options: ParseM3uOptions): ParsedPlayl
 
     const attributes = extInf.attributes;
     const resolvedGroupTitle = attributes["group-title"] || groupTitle;
-    const categories = categorizeChannel(resolvedGroupTitle, extInf.name);
+    const isVideoOnDemand = extInf.duration >= 0 || attributes["tvg-type"]?.toLocaleLowerCase() === "movie";
+    const categories: CategoryId[] = options.defaultCategory
+      ? [options.defaultCategory]
+      : isVideoOnDemand
+        ? ["movies"]
+        : categorizeChannel(resolvedGroupTitle, extInf.name);
     const tvgId = attributes["tvg-id"] || undefined;
     channels.push({
       id: channelId(options.sourceId, line, tvgId),

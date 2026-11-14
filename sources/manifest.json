@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "updatedAt": "2026-11-14T00:00:00Z",
   "sources": [
     {
       "id": "nasa-plus",
@@ -42,15 +43,123 @@
       "rightsNotes": "The GitHub publisher identifies this as a playlist of legally free, public-domain movies and links to Internet Archive files. Streamline imports links only and does not rehost media; confirm item-level rights terms before reuse.",
       "availabilityNotes": "The playlist currently contains 29 Internet Archive movie entries. The playlist, individual files, regional availability, and browser playback support can change.",
       "validation": {
-        "validatedAt": "2026-11-13",
-        "method": "Fetched the raw GitHub playlist, parsed 29 HTTPS Internet Archive media URLs, and received successful HEAD responses for every URL on 2026-11-13."
+        "validatedAt": "2026-11-14",
+        "method": "Fetched the raw GitHub playlist, parsed 29 HTTPS Internet Archive media URLs, and received successful HEAD responses for every URL on 2026-11-14."
+      }
+    },
+    {
+      "id": "local-now",
+      "name": "Local Now",
+      "kind": "official-link",
+      "categories": ["local", "news", "movies"],
+      "access": "free-official",
+      "providerUrl": "https://localnow.com/",
+      "regions": ["US"],
+      "provenanceUrl": "https://localnow.com/about",
+      "rightsNotes": "Official Local Now provider page for free local news, entertainment, movies, and channels; Streamline opens the provider instead of extracting its feeds.",
+      "availabilityNotes": "Local programming, supported devices, and regional coverage are controlled by Local Now and may change by market.",
+      "validation": {
+        "validatedAt": "2026-11-14",
+        "method": "Reviewed Local Now's official About page and linked the official provider handoff for Fire TV and other supported devices."
+      }
+    },
+    {
+      "id": "newson",
+      "name": "NewsON",
+      "kind": "official-link",
+      "categories": ["local", "news"],
+      "access": "free-official",
+      "providerUrl": "https://www.newson.us/",
+      "regions": ["US"],
+      "provenanceUrl": "https://corporate.newson.us/",
+      "rightsNotes": "Official NewsON provider page for live and on-demand local station newscasts; Streamline does not copy or redistribute station feeds.",
+      "availabilityNotes": "Market coverage depends on participating stations and the viewer's US location; the provider controls the current lineup.",
+      "validation": {
+        "validatedAt": "2026-11-14",
+        "method": "Reviewed NewsON's official corporate page and linked its official web experience for local station coverage."
+      }
+    },
+    {
+      "id": "haystack-news",
+      "name": "Haystack News",
+      "kind": "official-link",
+      "categories": ["local", "live-tv", "news"],
+      "access": "free-official",
+      "providerUrl": "https://www.haystack.tv/",
+      "provenanceUrl": "https://help.haystack.tv/en/articles/9218660-does-haystack-news-have-live-news",
+      "rightsNotes": "Official Haystack News provider page aggregating authorized local, national, and international news channels; Streamline uses a provider handoff.",
+      "availabilityNotes": "Haystack availability and its local channel lineup can change by country, device, and provider agreements.",
+      "validation": {
+        "validatedAt": "2026-11-14",
+        "method": "Reviewed Haystack's official live-news help page and provider site for local and global news availability."
+      }
+    },
+    {
+      "id": "pluto-tv",
+      "name": "Pluto TV",
+      "kind": "official-link",
+      "categories": ["live-tv", "news", "sports", "movies"],
+      "access": "free-official",
+      "providerUrl": "https://pluto.tv/",
+      "provenanceUrl": "https://pluto.tv/us/watch/live-tv/",
+      "rightsNotes": "Official Pluto TV provider page for free ad-supported live TV, news, sports, movies, and shows; Streamline does not extract Pluto feeds.",
+      "availabilityNotes": "Channel lineup, advertising, titles, and regional availability are controlled by Pluto TV and can change.",
+      "validation": {
+        "validatedAt": "2026-11-14",
+        "method": "Reviewed Pluto TV's official live-TV page and linked the provider handoff for supported streaming devices."
+      }
+    },
+    {
+      "id": "tubi",
+      "name": "Tubi",
+      "kind": "official-link",
+      "categories": ["movies", "live-tv"],
+      "access": "free-official",
+      "providerUrl": "https://tubitv.com/welcome",
+      "provenanceUrl": "https://tubitv.com/welcome",
+      "rightsNotes": "Official Tubi provider page for free, ad-supported movies and television; Streamline opens Tubi and does not rehost its catalog.",
+      "availabilityNotes": "Titles, live channels, supported devices, and regional access are controlled by Tubi and may change.",
+      "validation": {
+        "validatedAt": "2026-11-14",
+        "method": "Reviewed Tubi's official service page for legal free streaming and supported Fire TV access."
+      }
+    },
+    {
+      "id": "fubo-sports",
+      "name": "Fubo Sports",
+      "kind": "official-link",
+      "categories": ["sports", "news", "premium"],
+      "access": "user-authorized",
+      "providerUrl": "https://www.fubo.tv/",
+      "regions": ["US", "CA", "ES"],
+      "provenanceUrl": "https://www.fubo.tv/welcome/plans",
+      "rightsNotes": "Official Fubo provider page for subscription sports and live TV; playback requires the viewer's own subscription and approved provider application.",
+      "availabilityNotes": "Sports rights, local channels, prices, regional restrictions, and supported devices are controlled by Fubo.",
+      "validation": {
+        "validatedAt": "2026-11-14",
+        "method": "Reviewed Fubo's official plans page for live sports, television, regional restrictions, and subscription access."
+      }
+    },
+    {
+      "id": "netflix",
+      "name": "Netflix",
+      "kind": "official-link",
+      "categories": ["movies", "premium"],
+      "access": "user-authorized",
+      "providerUrl": "https://www.netflix.com/",
+      "provenanceUrl": "https://help.netflix.com/en/node/412",
+      "rightsNotes": "Official Netflix provider page for subscription movies and television; Streamline opens Netflix and never attempts to bypass its app or DRM.",
+      "availabilityNotes": "The catalog varies by region, plan, device, and current Netflix licensing terms.",
+      "validation": {
+        "validatedAt": "2026-11-14",
+        "method": "Reviewed Netflix's official help page for subscription access, regional catalog behavior, and supported devices."
       }
     },
     {
       "id": "authorized-playlist",
       "name": "Your authorized playlist",
       "kind": "user-authorized-playlist",
-      "categories": ["local", "live-tv", "movies", "sports", "premium"],
+      "categories": ["local", "live-tv", "news", "movies", "sports", "premium"],
       "access": "user-authorized",
       "provenanceUrl": "https://github.com/Phillj26/iptv-client/blob/main/LEGAL_SOURCES.md",
       "rightsNotes": "Import only an M3U/M3U8 URL or file you are entitled to use. Credentials remain on the viewer's device.",

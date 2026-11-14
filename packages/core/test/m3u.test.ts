@@ -20,6 +20,19 @@ describe("parseM3u", () => {
     ]);
   });
 
+  it("places timed VOD entries in Movies", () => {
+    const playlist = parseM3u(
+      `#EXTM3U\n#EXTINF:3600 group-title="Horror",Public domain film\nhttps://archive.example/film.mp4`,
+      { sourceId: "public-domain" }
+    );
+
+    expect(playlist.channels[0]).toEqual(expect.objectContaining({
+      groupTitle: "Horror",
+      primaryCategory: "movies",
+      categories: ["movies"]
+    }));
+  });
+
   it("does not accept unsupported transport URLs", () => {
     const playlist = parseM3u(
       `#EXTM3U\n#EXTINF:-1 group-title="Sports",Unverified stream\nrtsp://example.test/stream`,

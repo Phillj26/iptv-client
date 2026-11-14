@@ -11,3 +11,5 @@ work/
 *.jks
 .env
 .env.*
+!.env.example
+!apps/web/.env.example

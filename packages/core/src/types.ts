@@ -1,4 +1,4 @@
-export const categoryIds = ["local", "live-tv", "movies", "sports", "premium"] as const;
+export const categoryIds = ["local", "live-tv", "news", "movies", "sports", "premium"] as const;
 
 export type CategoryId = (typeof categoryIds)[number];
 
@@ -78,6 +78,7 @@ export interface SourceManifestEntry {
   providerUrl?: string;
   playlistUrl?: string;
   streamUrl?: string;
+  regions?: string[];
   provenanceUrl: string;
   rightsNotes: string;
   availabilityNotes: string;
@@ -85,4 +86,10 @@ export interface SourceManifestEntry {
     validatedAt: string;
     method: string;
   };
+}
+
+export interface SourceManifestDocument {
+  schemaVersion: number;
+  sources: SourceManifestEntry[];
+  updatedAt?: string;
 }

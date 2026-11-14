@@ -22,4 +22,8 @@ describe("catalog", () => {
     expect(searchChannels([channel], "news")).toEqual([]);
     expect(channelsForCategory([channel], "sports")).toEqual([channel]);
   });
+
+  it("classifies news channels separately from general live TV", () => {
+    expect(categorizeChannel("Local News", "Evening Headlines")).toEqual(["news", "local"]);
+  });
 });

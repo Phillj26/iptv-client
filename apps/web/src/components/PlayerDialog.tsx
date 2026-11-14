@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { classifyPlaybackError, programmeWindowForChannel, type Channel, type PlaybackError, type Programme } from "@streamline/core";
+import { lockPlayerOrientation, restoreOrientation } from "../lib/native";
 
 interface PlayerDialogProps {
   channel: Channel;
@@ -17,6 +18,13 @@ export function PlayerDialog({ channel, onClose, onWatchProgress, programmes }: 
   const [error, setError] = useState<PlaybackError>();
   const [attempt, setAttempt] = useState(0);
   const guide = programmeWindowForChannel(programmes, channel.tvgId);
+
+  useEffect(() => {
+    void lockPlayerOrientation();
+    return () => {
+      void restoreOrientation();
+    };
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
