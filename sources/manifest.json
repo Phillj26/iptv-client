@@ -32,6 +32,21 @@
       }
     },
     {
+      "id": "public-domain-movies",
+      "name": "Public-domain movies playlist",
+      "kind": "curated-public-playlist",
+      "categories": ["movies"],
+      "access": "free-official",
+      "playlistUrl": "https://raw.githubusercontent.com/OnlineM3U/publicdomainm3u/main/movies.m3u",
+      "provenanceUrl": "https://github.com/OnlineM3U/publicdomainm3u/blob/main/README.md",
+      "rightsNotes": "The GitHub publisher identifies this as a playlist of legally free, public-domain movies and links to Internet Archive files. Streamline imports links only and does not rehost media; confirm item-level rights terms before reuse.",
+      "availabilityNotes": "The playlist currently contains 29 Internet Archive movie entries. The playlist, individual files, regional availability, and browser playback support can change.",
+      "validation": {
+        "validatedAt": "2026-11-13",
+        "method": "Fetched the raw GitHub playlist, parsed 29 HTTPS Internet Archive media URLs, and received successful HEAD responses for every URL on 2026-11-13."
+      }
+    },
+    {
       "id": "authorized-playlist",
       "name": "Your authorized playlist",
       "kind": "user-authorized-playlist",

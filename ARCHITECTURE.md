@@ -12,7 +12,7 @@ Streamline is a local-first media client. It treats a playlist as user data, not
 | `apps/web` | React PWA, local persistence, HLS playback, responsive layout, and focus navigation. |
 | `apps/android-tv` | Capacitor configuration for Android mobile, Android TV, and Fire TV packaging. |
 | `apps/desktop` | Tauri configuration that packages the web build for desktop. |
-| `sources` | Auditable provider and placeholder manifest; never a repository of unlicensed streams. |
+| `sources` | Auditable provider, validated public-domain playlist, and placeholder manifest; never a repository of unlicensed streams. |
 
 ## Data flow
 

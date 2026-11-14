@@ -261,6 +261,19 @@ export function App() {
     setSetupOpen(false);
   };
 
+  const importPlaylistUrl = async (url: string, label: string) => {
+    try {
+      const validatedUrl = validateRemotePlaylistUrl(url);
+      const response = await fetch(validatedUrl);
+      if (!response.ok) {
+        throw new Error(`Provider returned ${response.status}`);
+      }
+      importPlaylist(await response.text(), label, validatedUrl.href);
+    } catch {
+      setNotice("This playlist could not be imported from the web. Download the authorized file and import it locally instead.");
+    }
+  };
+
   const onPlaylistFile = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
@@ -295,17 +308,12 @@ export function App() {
 
   const onRemotePlaylist = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    let label = "Remote playlist";
     try {
-      const url = validateRemotePlaylistUrl(remotePlaylistUrl);
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Provider returned ${response.status}`);
-      }
-      importPlaylist(await response.text(), url.hostname, url.href);
-      setRemotePlaylistUrl("");
-    } catch {
-      setNotice("This playlist could not be imported from the web. Your provider may block browser access; download the authorized file and import it locally instead.");
-    }
+      label = new URL(remotePlaylistUrl).hostname;
+    } catch {}
+    await importPlaylistUrl(remotePlaylistUrl, label);
+    setRemotePlaylistUrl("");
   };
 
   const toggleChannelFavorite = (channelId: string) => {
@@ -531,11 +539,13 @@ export function App() {
             {manifestSources.map((source) => (
               <article className="source-card" key={source.id}>
                 <div>
-                  <span className="source-type">{source.access === "free-official" ? "Official free access" : "Your authorization required"}</span>
+                  <span className="source-type">{source.kind === "curated-public-playlist" ? "Public-domain playlist" : source.access === "free-official" ? "Official free access" : "Your authorization required"}</span>
                   <h3>{source.name}</h3>
                   <p>{source.availabilityNotes}</p>
                 </div>
-                {source.providerUrl ? (
+                {source.playlistUrl ? (
+                  <button className="secondary-button" onClick={() => void importPlaylistUrl(source.playlistUrl as string, source.name)} type="button">Add playlist</button>
+                ) : source.providerUrl ? (
                   <button className="secondary-button" onClick={() => window.open(source.providerUrl, "_blank", "noopener,noreferrer")} type="button">Open provider ↗</button>
                 ) : (
                   <button className="secondary-button" onClick={() => setSetupOpen(true)} type="button">Add your source</button>

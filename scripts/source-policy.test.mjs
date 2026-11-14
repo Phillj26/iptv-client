@@ -26,3 +26,24 @@ test("direct streams require documented provenance and HTTPS", () => {
     /HTTPS provenance/
   );
 });
+
+test("curated public playlists require a free HTTPS playlist URL", () => {
+  assert.throws(
+    () => validateManifest({
+      schemaVersion: 1,
+      sources: [{
+        id: "unsafe-playlist",
+        name: "Unsafe playlist",
+        kind: "curated-public-playlist",
+        categories: ["movies"],
+        access: "free-official",
+        playlistUrl: "http://example.test/movies.m3u",
+        provenanceUrl: "https://example.test/source",
+        rightsNotes: "This intentionally lacks an HTTPS playlist URL and is rejected.",
+        availabilityNotes: "This intentionally lacks sufficient availability details and is rejected.",
+        validation: { validatedAt: "2026-11-13", method: "This test demonstrates policy rejection for unsafe playlist URLs." }
+      }]
+    }),
+    /HTTPS playlist URL/
+  );
+});

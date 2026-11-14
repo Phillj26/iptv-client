@@ -22,13 +22,13 @@ Streamline is a playlist client, not a stream catalogue. The project accepts onl
 
 ## Initial manifest entries
 
-The initial manifest uses official provider links rather than brittle, undocumented media URLs:
+The initial manifest uses official provider links plus one rights-documented public-domain playlist rather than brittle, undocumented media URLs:
 
 - NASA+ is identified by NASA as a no-cost, ad-free service with live coverage and on-demand programming.
 - The Library of Congress National Screening Room provides access to films whose rights status and approved viewing terms are documented by the Library.
 
-Both are links to the official experience, not bundled M3U feeds. Availability can vary by location, platform, and provider terms.
+The Public-domain movies playlist is published by `OnlineM3U` on GitHub, identifies its entries as public-domain works, and points to Internet Archive media files. The app imports the playlist links without rehosting them. The publisher's rights statement and each item's terms should be reviewed before reuse. Availability can vary by location, platform, and provider terms.
 
 ## Adding a direct public stream
 
-Add a `direct-stream` entry only after manually confirming that it is a current HTTPS HLS stream from the authorized provider. Record the verification in the manifest, run the online validator, and add a test fixture when the playlist format presents a new case. A successful network response alone is not proof of distribution rights.
+Add a `direct-stream` entry only after manually confirming that it is a current HTTPS HLS stream from the authorized provider. Add a `curated-public-playlist` entry only when its publisher documents the rights basis and every media URL is checked. Record the verification in the manifest, run the online validator, and add a test fixture when the playlist format presents a new case. A successful network response alone is not proof of distribution rights.

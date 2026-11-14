@@ -67,7 +67,7 @@ export interface PlaybackError {
   retryable: boolean;
 }
 
-export type ManifestSourceKind = "official-link" | "user-authorized-playlist" | "direct-stream";
+export type ManifestSourceKind = "official-link" | "user-authorized-playlist" | "direct-stream" | "curated-public-playlist";
 
 export interface SourceManifestEntry {
   id: string;
@@ -76,6 +76,7 @@ export interface SourceManifestEntry {
   categories: CategoryId[];
   access: "free-official" | "user-authorized";
   providerUrl?: string;
+  playlistUrl?: string;
   streamUrl?: string;
   provenanceUrl: string;
   rightsNotes: string;

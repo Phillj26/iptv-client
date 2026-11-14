@@ -9,7 +9,7 @@ Streamline is a privacy-first, Netflix-style IPTV client for web, Android mobile
 - A responsive, remote-friendly web UI with visible focus states and keyboard / D-pad navigation.
 - HLS playback with clear, actionable errors and a safe retry path.
 - Android / Fire TV packaging through Capacitor and a desktop shell through Tauri.
-- An auditable source manifest for official provider links and user-authorized playlist placeholders.
+- An auditable source manifest for official provider links, one validated public-domain playlist, and user-authorized playlist placeholders.
 
 ## Platform architecture
 
@@ -75,7 +75,9 @@ Some playlist servers block browser requests with CORS. Downloading the authoriz
 
 ## Legal source policy
 
-`sources/manifest.json` includes only official provider links and placeholders for sources supplied by the viewer. It intentionally contains no bundled public M3U URLs. Before any direct stream URL is added, it must have documented provenance, rights/availability notes, a validation date, and a passing online validation.
+`sources/manifest.json` includes official provider links, a GitHub-hosted public-domain movie playlist whose media URLs were validated, and placeholders for sources supplied by the viewer. Before any direct stream or curated playlist is added, it must have documented provenance, rights/availability notes, a validation date, and a passing online validation.
+
+The **Public-domain movies playlist** card can import the validated GitHub playlist directly. If browser CORS prevents the import, download the raw `.m3u` file from the provenance link and use **Add playlist → Import M3U / M3U8**. The source publisher identifies the linked works as public domain; review item-level rights notes before redistributing or republishing anything.
 
 ```bash
 pnpm validate:sources
