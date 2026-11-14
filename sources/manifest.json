@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "nasa-plus",
+      "name": "NASA+",
+      "kind": "official-link",
+      "categories": ["live-tv"],
+      "access": "free-official",
+      "providerUrl": "https://plus.nasa.gov/",
+      "provenanceUrl": "https://www.nasa.gov/ways-to-watch/",
+      "rightsNotes": "Official NASA provider link. NASA describes NASA+ as free and ad-free; this app does not extract or redistribute its streams.",
+      "availabilityNotes": "Availability and supported devices are determined by NASA. Open the official experience to watch.",
+      "validation": {
+        "validatedAt": "2026-11-05",
+        "method": "Reviewed NASA's official Ways to Watch page and linked only to the official provider page."
+      }
+    },
+    {
+      "id": "loc-national-screening-room",
+      "name": "Library of Congress National Screening Room",
+      "kind": "official-link",
+      "categories": ["movies"],
+      "access": "free-official",
+      "providerUrl": "https://www.loc.gov/collections/national-screening-room/",
+      "provenanceUrl": "https://www.loc.gov/programs/national-film-preservation-board/film-registry/watch-films-on-the-national-film-registry/",
+      "rightsNotes": "Official Library of Congress experience. Individual works have their own rights or approved-viewing terms; the app links to the Library rather than redistributing media.",
+      "availabilityNotes": "Catalog availability and regional access can change. Review the item's Rights and Access information before reuse.",
+      "validation": {
+        "validatedAt": "2026-11-05",
+        "method": "Reviewed the Library of Congress collection and its official rights guidance; no direct media URL is bundled."
+      }
+    },
+    {
+      "id": "authorized-playlist",
+      "name": "Your authorized playlist",
+      "kind": "user-authorized-playlist",
+      "categories": ["local", "live-tv", "movies", "sports", "premium"],
+      "access": "user-authorized",
+      "provenanceUrl": "https://github.com/Phillj26/iptv-client/blob/main/LEGAL_SOURCES.md",
+      "rightsNotes": "Import only an M3U/M3U8 URL or file you are entitled to use. Credentials remain on the viewer's device.",
+      "availabilityNotes": "Dependent on the viewer's provider, subscription, region, and device authorization.",
+      "validation": {
+        "validatedAt": "2026-11-05",
+        "method": "Policy placeholder only; no channel URL or credentials are stored in this manifest."
+      }
+    },
+    {
+      "id": "premium-sports-provider",
+      "name": "Premium sports provider",
+      "kind": "user-authorized-playlist",
+      "categories": ["sports", "premium"],
+      "access": "user-authorized",
+      "provenanceUrl": "https://github.com/Phillj26/iptv-client/blob/main/LEGAL_SOURCES.md",
+      "rightsNotes": "Use the official provider app, provider deep link, or an M3U feed that the subscribed provider explicitly authorizes for the viewer.",
+      "availabilityNotes": "Requires the viewer's active subscription and any required regional or device authorization.",
+      "validation": {
+        "validatedAt": "2026-11-05",
+        "method": "Safe integration placeholder; intentionally contains no paid sports stream URL."
+      }
+    },
+    {
+      "id": "premium-movies-provider",
+      "name": "Premium movies provider",
+      "kind": "user-authorized-playlist",
+      "categories": ["movies", "premium"],
+      "access": "user-authorized",
+      "provenanceUrl": "https://github.com/Phillj26/iptv-client/blob/main/LEGAL_SOURCES.md",
+      "rightsNotes": "Use the official provider app, provider deep link, or an M3U feed that the subscribed provider explicitly authorizes for the viewer.",
+      "availabilityNotes": "Requires the viewer's active subscription and any required regional or device authorization.",
+      "validation": {
+        "validatedAt": "2026-11-05",
+        "method": "Safe integration placeholder; intentionally contains no paid movie stream URL."
+      }
+    }
+  ]
+}

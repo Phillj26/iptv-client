@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main",
+  "description": "Default capability for the Streamline desktop window.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}
