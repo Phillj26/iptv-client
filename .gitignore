@@ -5,6 +5,7 @@ coverage/
 *.log
 apps/android-tv/android/
 apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/
 *.keystore
 *.jks
 .env
