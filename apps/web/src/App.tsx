@@ -124,6 +124,12 @@ function isCurrentSourceCatalog(updatedAt?: string): boolean {
   return Date.parse(updatedAt) >= bundledCatalogTimestamp;
 }
 
+function sourceCatalogRequestUrl(): URL {
+  const url = validateRemotePlaylistUrl(sourceCatalogUrl);
+  url.searchParams.set("streamline_catalog", Date.now().toString());
+  return url;
+}
+
 function sourceMatchesLocation(source: SourceManifestEntry, location?: ViewerLocation): boolean {
   if (!location?.label || !source.regions?.length) {
     return false;
@@ -378,8 +384,7 @@ export function App() {
       const controller = new AbortController();
       const timeout = window.setTimeout(() => controller.abort(), 15_000);
       try {
-        const validatedUrl = validateRemotePlaylistUrl(sourceCatalogUrl);
-        const response = await fetch(validatedUrl, { cache: "no-store", signal: controller.signal });
+        const response = await fetch(sourceCatalogRequestUrl(), { cache: "no-store", signal: controller.signal });
         if (!response.ok) {
           throw new Error(`Provider catalog returned ${response.status}`);
         }
