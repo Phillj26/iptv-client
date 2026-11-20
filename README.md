@@ -63,6 +63,22 @@ The Android build requires JDK 21, Android SDK platform 35 or newer, and build-t
 
 To enable user login, copy `apps/web/.env.example` to a local web environment file and set the public Supabase project URL and anon key. Configure email/password access in the Supabase dashboard, then rebuild the web app before creating the Android package. Login is optional and does not upload playlists; provider credentials remain local to the viewer's authorized source.
 
+## Register a GitHub App
+
+The repository includes a public, read-only GitHub App manifest at `.github/github-app-manifest.json`. To start the GitHub registration flow:
+
+```bash
+node scripts/register-github-app.mjs
+```
+
+Open the printed URL, review the permissions, and complete registration in GitHub. GitHub will return an app ID and a private key. Store the private key as a secret outside the repository and never commit it.
+
+For an organization-owned app, pass the organization login:
+
+```bash
+node scripts/register-github-app.mjs YOUR_ORGANIZATION
+```
+
 ### Desktop
 
 The Tauri configuration lives in `apps/desktop/src-tauri/tauri.conf.json`. Install the Rust and Tauri prerequisites, then run:
