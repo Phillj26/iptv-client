@@ -1,0 +1,17 @@
+{
+  "name": "Streamline",
+  "description": "A privacy-first, cross-platform IPTV client.",
+  "url": "https://github.com/Phillj26/iptv-client",
+  "hook_attributes": {
+    "active": false
+  },
+  "redirect_url": "https://github.com/Phillj26/iptv-client",
+  "callback_urls": [],
+  "setup_url": "https://github.com/Phillj26/iptv-client",
+  "request_oauth_on_install": false,
+  "public": true,
+  "default_permissions": {
+    "contents": "read",
+    "metadata": "read"
+  }
+}
