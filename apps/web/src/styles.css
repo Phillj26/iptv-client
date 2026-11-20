@@ -62,7 +62,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px
 .section-heading h2 { margin: 0; font-size: 1.35rem; letter-spacing: -.025em; }
 .section-heading p { margin: .35rem 0 0; color: #8994a7; font-size: .88rem; }
 .icon-button { border: 1px solid #39475c; background: #172031; color: #eff5ff; width: 2.2rem; height: 2.2rem; font-size: 1.45rem; line-height: 1; border-radius: .6rem; }
-.setup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+.setup-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
 .upload-card, .url-card { border: 1px dashed #3e536d; border-radius: .8rem; background: #0c111c; padding: 1rem; min-height: 10.2rem; display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; color: #edf4ff; }
 .location-card { margin-top: .8rem; border: 1px solid #2e435b; border-radius: .8rem; background: #0c111c; padding: 1rem; display: grid; gap: .65rem; color: #edf4ff; }
 .location-card > div:first-child { display: grid; gap: .3rem; }
@@ -79,6 +79,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px
 .paste-panel label { font-weight: 750; font-size: .9rem; }
 .paste-panel textarea { min-height: 7.2rem; resize: vertical; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .8rem; line-height: 1.5; }
 .paste-panel .primary-button { justify-self: start; }
+.github-candidates { margin-top: 1.1rem; border-top: 1px solid #2b3a4e; padding-top: 1rem; display: grid; gap: .8rem; }
+.github-candidates > div { display: grid; gap: .25rem; }
+.github-candidates p { margin: 0; color: #96a3b6; font-size: .8rem; line-height: 1.45; }
+.github-candidates ul { padding: 0; margin: 0; list-style: none; display: grid; gap: .55rem; }
+.github-candidates li { background: #0c111c; border: 1px solid #2e3e53; border-radius: .65rem; padding: .75rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.github-candidates li > div { display: grid; gap: .25rem; min-width: 0; }
+.github-candidates li strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.github-candidates li small { color: #9aa7b9; font-size: .78rem; }
 .playlist-manager { margin-top: 1.1rem; border-top: 1px solid #2b3a4e; padding-top: 1rem; display: grid; gap: .8rem; }
 .playlist-manager > div { display: grid; gap: .25rem; }
 .playlist-manager p { margin: 0; color: #96a3b6; font-size: .8rem; line-height: 1.45; }

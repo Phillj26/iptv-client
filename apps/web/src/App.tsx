@@ -6,6 +6,8 @@ import {
   parseM3u,
   parseSourceManifest,
   parseXmlTv,
+  parseGitHubSourceUrl,
+  gitHubSourceFileKind,
   programmeWindowForChannel,
   programmesForChannel,
   recordWatchProgress,
@@ -15,6 +17,7 @@ import {
   type CategoryId,
   type Channel,
   type EpgChannel,
+  type GitHubSourceFile,
   type PlaylistWarning,
   type Programme,
   type SourceManifestEntry,
@@ -356,6 +359,9 @@ export function App() {
   const [isSetupOpen, setSetupOpen] = useState(false);
   const [playlistText, setPlaylistText] = useState("");
   const [remotePlaylistUrl, setRemotePlaylistUrl] = useState("");
+  const [githubSourceUrl, setGithubSourceUrl] = useState("");
+  const [githubCandidates, setGithubCandidates] = useState<GitHubSourceFile[]>([]);
+  const [githubImportBusy, setGithubImportBusy] = useState(false);
   const [warnings, setWarnings] = useState<PlaylistWarning[]>([]);
   const [notice, setNotice] = useState<string>();
   const [activeChannel, setActiveChannel] = useState<Channel>();
@@ -753,6 +759,108 @@ export function App() {
     setRemotePlaylistUrl("");
   };
 
+  const importGitHubCandidate = async (candidate: GitHubSourceFile) => {
+    try {
+      setGithubImportBusy(true);
+      const response = await fetch(candidate.downloadUrl, { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`GitHub returned ${response.status}`);
+      }
+      const content = await response.text();
+      const label = candidate.path.split("/").pop()?.replace(/\.(m3u8?|xmltv?|gz)$/i, "") || candidate.path;
+
+      if (candidate.kind === "playlist") {
+        importPlaylist(content, label, candidate.downloadUrl);
+      } else {
+        const parsed = parseXmlTv(content);
+        setWarnings(parsed.warnings);
+        setLibrary((current) => ({
+          ...current,
+          epg: {
+            channels: parsed.channels,
+            programmes: parsed.programmes.map((programme) => ({
+              ...programme,
+              start: programme.start.toISOString(),
+              end: programme.end?.toISOString()
+            }))
+          }
+        }));
+        setNotice(`Added guide data for ${parsed.channels.length} channels and ${parsed.programmes.length} programmes from GitHub.`);
+      }
+    } catch {
+      setNotice("This GitHub file could not be downloaded or parsed. Check that it is a public, authorized M3U/M3U8 or XMLTV file.");
+    } finally {
+      setGithubImportBusy(false);
+    }
+  };
+
+  const onGitHubSource = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setGithubImportBusy(true);
+    setGithubCandidates([]);
+    try {
+      const source = parseGitHubSourceUrl(githubSourceUrl);
+      if (source.kind === "file") {
+        await importGitHubCandidate({
+          kind: source.sourceKind,
+          path: source.path,
+          downloadUrl: source.rawUrl
+        });
+        setGithubSourceUrl("");
+        return;
+      }
+
+      const metadataResponse = await fetch(`https://api.github.com/repos/${source.owner}/${source.repo}`, {
+        headers: { Accept: "application/vnd.github+json" }
+      });
+      if (!metadataResponse.ok) {
+        throw new Error(`GitHub repository returned ${metadataResponse.status}`);
+      }
+      const metadata = await metadataResponse.json() as { default_branch?: string };
+      const ref = source.ref || metadata.default_branch || "main";
+      const treeResponse = await fetch(
+        `https://api.github.com/repos/${source.owner}/${source.repo}/git/trees/${encodeURIComponent(ref)}?recursive=1`,
+        { headers: { Accept: "application/vnd.github+json" } }
+      );
+      if (!treeResponse.ok) {
+        throw new Error(`GitHub file tree returned ${treeResponse.status}`);
+      }
+      const tree = await treeResponse.json() as {
+        truncated?: boolean;
+        tree?: Array<{ type?: string; path?: string }>;
+      };
+      const prefix = source.path ? `${source.path.replace(/\/$/, "")}/` : "";
+      const candidates = (tree.tree || [])
+        .filter((entry) => entry.type === "blob" && entry.path)
+        .map((entry) => {
+          const kind = gitHubSourceFileKind(entry.path as string);
+          return kind
+            ? {
+                kind,
+                path: entry.path as string,
+                downloadUrl: `https://raw.githubusercontent.com/${source.owner}/${source.repo}/${encodeURIComponent(ref)}/${(entry.path as string).split("/").map((segment) => encodeURIComponent(segment)).join("/")}`
+              }
+            : undefined;
+        })
+        .filter((candidate): candidate is GitHubSourceFile =>
+          Boolean(candidate && (!prefix || candidate.path.startsWith(prefix)))
+        )
+        .slice(0, 100);
+
+      setGithubCandidates(candidates);
+      setNotice(candidates.length > 0
+        ? `Found ${candidates.length} M3U/M3U8 or XMLTV file${candidates.length === 1 ? "" : "s"} in GitHub. Review and import only sources you are authorized to use.`
+        : "No M3U, M3U8, XML, or XMLTV files were found in this repository.");
+      if (tree.truncated) {
+        setNotice("The GitHub file tree was truncated. Add a more specific repository directory or file URL.");
+      }
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "This GitHub repository could not be accessed.");
+    } finally {
+      setGithubImportBusy(false);
+    }
+  };
+
   const toggleChannelFavorite = (channelId: string) => {
     setLibrary((current) => ({ ...current, favorites: toggleFavorite(current.favorites, channelId) }));
   };
@@ -869,6 +977,12 @@ export function App() {
                 <input onChange={(event) => setRemotePlaylistUrl(event.target.value)} placeholder="https://provider.example/playlist.m3u" required type="url" value={remotePlaylistUrl} />
                 <button className="secondary-button" type="submit">Import URL</button>
               </form>
+              <form className="url-card" onSubmit={onGitHubSource}>
+                <strong>GitHub repository or file</strong>
+                <small>Import public or authorized M3U/M3U8 and XMLTV files.</small>
+                <input onChange={(event) => setGithubSourceUrl(event.target.value)} placeholder="https://github.com/owner/repository" required type="url" value={githubSourceUrl} />
+                <button className="secondary-button" disabled={githubImportBusy} type="submit">{githubImportBusy ? "Scanning…" : "Find files"}</button>
+              </form>
             </div>
             <div className="location-card">
               <div>
@@ -892,6 +1006,32 @@ export function App() {
               />
               <button className="primary-button" disabled={playlistText.trim().length === 0} onClick={() => importPlaylist(playlistText, "Pasted playlist", playlistText)} type="button">Add playlist text</button>
             </div>
+            {githubCandidates.length > 0 && (
+              <section className="github-candidates" aria-label="GitHub import candidates">
+                <div>
+                  <strong>GitHub files found</strong>
+                  <p>Only import files you own or are authorized to use. Parsing happens after import.</p>
+                </div>
+                <ul>
+                  {githubCandidates.map((candidate) => (
+                    <li key={candidate.downloadUrl}>
+                      <div>
+                        <strong>{candidate.path}</strong>
+                        <small>{candidate.kind === "playlist" ? "M3U/M3U8 playlist" : "XMLTV guide"}</small>
+                      </div>
+                      <button
+                        className="secondary-button"
+                        disabled={githubImportBusy}
+                        onClick={() => void importGitHubCandidate(candidate)}
+                        type="button"
+                      >
+                        Import
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
             <section className="playlist-manager" aria-label="Imported playlists">
               <div>
                 <strong>Imported playlists</strong>
