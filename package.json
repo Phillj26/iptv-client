@@ -5,18 +5,18 @@
   "description": "A legal, cross-platform, local-first IPTV client.",
   "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "dev": "corepack pnpm --filter @streamline/web dev",
-    "build": "corepack pnpm --filter @streamline/core build && corepack pnpm --filter @streamline/web build",
-    "test": "corepack pnpm --filter @streamline/core test && corepack pnpm --filter @streamline/web test && node --test scripts/source-policy.test.mjs",
-    "test:core": "corepack pnpm --filter @streamline/core test",
-    "typecheck": "corepack pnpm --filter @streamline/core typecheck && corepack pnpm --filter @streamline/web typecheck",
+    "dev": "pnpm --filter @streamline/web dev",
+    "build": "pnpm --filter @streamline/core build && pnpm --filter @streamline/web build",
+    "test": "pnpm --filter @streamline/core test && pnpm --filter @streamline/web test && node --test scripts/source-policy.test.mjs",
+    "test:core": "pnpm --filter @streamline/core test",
+    "typecheck": "pnpm --filter @streamline/core typecheck && pnpm --filter @streamline/web typecheck",
     "validate:sources": "node scripts/validate-sources.mjs",
-    "check": "corepack pnpm typecheck && corepack pnpm test && corepack pnpm validate:sources",
-    "android:sync": "corepack pnpm build && corepack pnpm --filter @streamline/android-tv run sync",
-    "android:create": "corepack pnpm --filter @streamline/android-tv run create",
-    "android:configure": "corepack pnpm --filter @streamline/android-tv run configure",
-    "android:open": "corepack pnpm --filter @streamline/android-tv run open",
-    "desktop:dev": "corepack pnpm --filter @streamline/desktop dev"
+    "check": "pnpm typecheck && pnpm test && pnpm validate:sources",
+    "android:sync": "pnpm build && pnpm --filter @streamline/android-tv run sync",
+    "android:create": "pnpm --filter @streamline/android-tv run create",
+    "android:configure": "pnpm --filter @streamline/android-tv run configure",
+    "android:open": "pnpm --filter @streamline/android-tv run open",
+    "desktop:dev": "pnpm --filter @streamline/desktop dev"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
